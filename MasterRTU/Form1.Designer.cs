@@ -51,6 +51,7 @@
             this.tCoil2_1 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.timerPoll = new System.Windows.Forms.Timer(this.components);
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -119,7 +120,7 @@
             // Slave1
             // 
             this.Slave1.AutoSize = true;
-            this.Slave1.Location = new System.Drawing.Point(34, 164);
+            this.Slave1.Location = new System.Drawing.Point(34, 214);
             this.Slave1.Name = "Slave1";
             this.Slave1.Size = new System.Drawing.Size(46, 13);
             this.Slave1.TabIndex = 0;
@@ -130,7 +131,7 @@
             // 
             this.tCoil1_1.AutoSize = true;
             this.tCoil1_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil1_1.Location = new System.Drawing.Point(37, 188);
+            this.tCoil1_1.Location = new System.Drawing.Point(37, 238);
             this.tCoil1_1.Name = "tCoil1_1";
             this.tCoil1_1.Size = new System.Drawing.Size(42, 46);
             this.tCoil1_1.TabIndex = 8;
@@ -139,7 +140,7 @@
             // lblCoil1_1
             // 
             this.lblCoil1_1.AutoSize = true;
-            this.lblCoil1_1.Location = new System.Drawing.Point(42, 234);
+            this.lblCoil1_1.Location = new System.Drawing.Point(42, 284);
             this.lblCoil1_1.Name = "lblCoil1_1";
             this.lblCoil1_1.Size = new System.Drawing.Size(30, 13);
             this.lblCoil1_1.TabIndex = 9;
@@ -149,7 +150,7 @@
             // lblCoil1_2
             // 
             this.lblCoil1_2.AutoSize = true;
-            this.lblCoil1_2.Location = new System.Drawing.Point(80, 234);
+            this.lblCoil1_2.Location = new System.Drawing.Point(80, 284);
             this.lblCoil1_2.Name = "lblCoil1_2";
             this.lblCoil1_2.Size = new System.Drawing.Size(30, 13);
             this.lblCoil1_2.TabIndex = 11;
@@ -159,7 +160,7 @@
             // 
             this.tCoil1_2.AutoSize = true;
             this.tCoil1_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil1_2.Location = new System.Drawing.Point(75, 188);
+            this.tCoil1_2.Location = new System.Drawing.Point(75, 238);
             this.tCoil1_2.Name = "tCoil1_2";
             this.tCoil1_2.Size = new System.Drawing.Size(42, 46);
             this.tCoil1_2.TabIndex = 10;
@@ -168,7 +169,7 @@
             // lblCoil1_3
             // 
             this.lblCoil1_3.AutoSize = true;
-            this.lblCoil1_3.Location = new System.Drawing.Point(121, 234);
+            this.lblCoil1_3.Location = new System.Drawing.Point(121, 284);
             this.lblCoil1_3.Name = "lblCoil1_3";
             this.lblCoil1_3.Size = new System.Drawing.Size(30, 13);
             this.lblCoil1_3.TabIndex = 13;
@@ -178,7 +179,7 @@
             // 
             this.tCoil1_3.AutoSize = true;
             this.tCoil1_3.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil1_3.Location = new System.Drawing.Point(116, 188);
+            this.tCoil1_3.Location = new System.Drawing.Point(116, 238);
             this.tCoil1_3.Name = "tCoil1_3";
             this.tCoil1_3.Size = new System.Drawing.Size(42, 46);
             this.tCoil1_3.TabIndex = 12;
@@ -187,7 +188,7 @@
             // lblCoil2_3
             // 
             this.lblCoil2_3.AutoSize = true;
-            this.lblCoil2_3.Location = new System.Drawing.Point(258, 234);
+            this.lblCoil2_3.Location = new System.Drawing.Point(258, 284);
             this.lblCoil2_3.Name = "lblCoil2_3";
             this.lblCoil2_3.Size = new System.Drawing.Size(30, 13);
             this.lblCoil2_3.TabIndex = 20;
@@ -197,7 +198,7 @@
             // 
             this.tCoil2_3.AutoSize = true;
             this.tCoil2_3.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil2_3.Location = new System.Drawing.Point(253, 188);
+            this.tCoil2_3.Location = new System.Drawing.Point(253, 238);
             this.tCoil2_3.Name = "tCoil2_3";
             this.tCoil2_3.Size = new System.Drawing.Size(42, 46);
             this.tCoil2_3.TabIndex = 19;
@@ -206,7 +207,7 @@
             // lblCoil2_2
             // 
             this.lblCoil2_2.AutoSize = true;
-            this.lblCoil2_2.Location = new System.Drawing.Point(217, 234);
+            this.lblCoil2_2.Location = new System.Drawing.Point(217, 284);
             this.lblCoil2_2.Name = "lblCoil2_2";
             this.lblCoil2_2.Size = new System.Drawing.Size(30, 13);
             this.lblCoil2_2.TabIndex = 18;
@@ -216,7 +217,7 @@
             // 
             this.tCoil2_2.AutoSize = true;
             this.tCoil2_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil2_2.Location = new System.Drawing.Point(212, 188);
+            this.tCoil2_2.Location = new System.Drawing.Point(212, 238);
             this.tCoil2_2.Name = "tCoil2_2";
             this.tCoil2_2.Size = new System.Drawing.Size(42, 46);
             this.tCoil2_2.TabIndex = 17;
@@ -225,7 +226,7 @@
             // lblCoil2_1
             // 
             this.lblCoil2_1.AutoSize = true;
-            this.lblCoil2_1.Location = new System.Drawing.Point(179, 234);
+            this.lblCoil2_1.Location = new System.Drawing.Point(179, 284);
             this.lblCoil2_1.Name = "lblCoil2_1";
             this.lblCoil2_1.Size = new System.Drawing.Size(30, 13);
             this.lblCoil2_1.TabIndex = 16;
@@ -235,7 +236,7 @@
             // 
             this.tCoil2_1.AutoSize = true;
             this.tCoil2_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tCoil2_1.Location = new System.Drawing.Point(174, 188);
+            this.tCoil2_1.Location = new System.Drawing.Point(174, 238);
             this.tCoil2_1.Name = "tCoil2_1";
             this.tCoil2_1.Size = new System.Drawing.Size(42, 46);
             this.tCoil2_1.TabIndex = 15;
@@ -244,7 +245,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(171, 164);
+            this.label12.Location = new System.Drawing.Point(171, 214);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(46, 13);
             this.label12.TabIndex = 14;
@@ -255,11 +256,23 @@
             this.timerPoll.Interval = 1000;
             this.timerPoll.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(30, 156);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(272, 39);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Lectura de Coils:";
+            this.label4.Click += new System.EventHandler(this.label4_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(735, 450);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.lblCoil2_3);
             this.Controls.Add(this.tCoil2_3);
             this.Controls.Add(this.lblCoil2_2);
@@ -312,6 +325,7 @@
         private System.Windows.Forms.Label tCoil2_1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Timer timerPoll;
+        private System.Windows.Forms.Label label4;
     }
 }
 
