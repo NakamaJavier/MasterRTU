@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EasyModbus;
 using System.IO;
+using System.IO.Ports;
 
 namespace MasterRTU
 {
@@ -17,6 +18,7 @@ namespace MasterRTU
         ModbusClient ModClient = new ModbusClient();
         List<int> slaveIds = new List<int>();
         private const string SlaveIdsFileName = "slaveIds.txt";
+        SerialPort serialPort = new SerialPort();
         class SlaveObject
         {
             public int SlaveId { get; set; }
@@ -39,8 +41,16 @@ namespace MasterRTU
         {
             if (btnConnect.Text == "Connect")
             {
-                ModClient.SerialPort = txtPort.Text;
-                ModClient.Baudrate = int.Parse(txtBaud.Text);
+                // Accede al objeto SerialPort subyacente
+                serialPort.PortName = (txtPort.Text);
+
+                // Configurar los parámetros del puerto serie
+                serialPort.BaudRate = int.Parse(txtBaud.Text);
+                serialPort.DataBits = 8;
+                serialPort.Parity = Parity.None;
+                serialPort.StopBits = StopBits.One;
+
+                ModClient.SerialPort = serialPort.PortName;
                 ModClient.Connect();
                 timerPoll.Start();
                 lblStatus.Text = "Connected";
@@ -104,6 +114,7 @@ namespace MasterRTU
         
             if (ModClient.Connected == true)
             {
+                serialPort.RtsEnable = true;
                 foreach (byte slaveId in slaveIds)
                 {
                     SlaveObject slaveObject = slaveList.FirstOrDefault(slave => slave.SlaveId == slaveId);
@@ -141,7 +152,7 @@ namespace MasterRTU
                         }
                     }
                 }
-                
+                //serialPort.RtsEnable = false;
             }
         }
 
