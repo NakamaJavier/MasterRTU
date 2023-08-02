@@ -79,7 +79,7 @@ namespace MasterRTU
                             try
                             {
                                 ModClient.UnitIdentifier = slaveId;
-                                int[] response = ModClient.ReadHoldingRegisters(0, 1);
+                                bool[] response = ModClient.ReadCoils(0, 1);
                                 // Si no se produce una excepción, significa que el esclavo con el ID actual está conectado
                                 connected = true;
                                 break; // Sale del bucle de intentos si la conexión fue exitosa
