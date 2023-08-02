@@ -72,7 +72,7 @@ namespace MasterRTU
                     slaveIds.Clear();
                     for (byte slaveId = 1; slaveId <= 15; slaveId++) // Itera sobre todos los posibles IDs de esclavos (1-255)
                     {
-                        int retryCount = 5;
+                        int retryCount = 2;
                         bool connected = false;
                         for (int retry = 0; retry < retryCount; retry++)
                         {
