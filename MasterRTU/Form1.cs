@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using EasyModbus;
 using System.IO;
 using System.IO.Ports;
+using System.Threading;
 
 namespace MasterRTU
 {
@@ -29,7 +30,7 @@ namespace MasterRTU
         public Form1()
         {
             InitializeComponent();
-            
+
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -62,9 +63,10 @@ namespace MasterRTU
                     string[] lines = File.ReadAllLines(SlaveIdsFileName);
                     slaveIds = lines.Select(int.Parse).ToList();
                     CreateWriteRegistersComponents(353, 20, slaveIds);
-                    
+
                 }
-                else { 
+                else
+                {
                     ModClient.ConnectionTimeout = 250;
                     slaveIds.Clear();
                     for (byte slaveId = 1; slaveId <= 15; slaveId++) // Itera sobre todos los posibles IDs de esclavos (1-255)
@@ -96,7 +98,7 @@ namespace MasterRTU
                 lblStatus.Text = "Disconnected";
                 btnConnect.Text = "Connect";
             }
-            
+
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -111,10 +113,11 @@ namespace MasterRTU
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-        
+
             if (ModClient.Connected == true)
             {
                 serialPort.RtsEnable = true;
+                Thread.Sleep(50);
                 foreach (byte slaveId in slaveIds)
                 {
                     SlaveObject slaveObject = slaveList.FirstOrDefault(slave => slave.SlaveId == slaveId);
@@ -147,12 +150,13 @@ namespace MasterRTU
                         }
                         catch
                         {
-                            Console.WriteLine("No se encontro el Slave:" + slaveId+" \n Error: "+ slaveObject.FailCount);
+                            Console.WriteLine("No se encontro el Slave:" + slaveId + " \n Error: " + slaveObject.FailCount);
                             slaveObject.FailCount++;
                         }
                     }
                 }
-                //serialPort.RtsEnable = false;
+                Thread.Sleep(50);
+                serialPort.RtsEnable = false;
             }
         }
 
@@ -172,13 +176,13 @@ namespace MasterRTU
         }
 
         // Evento Form1_Load fuera de la clase Form1
-       
+
         private void CreateWriteRegistersComponents(int posicionX, int posicionY, List<int> slaveIds)
         {
-            
+
             //variables de formato:
             int indexlabel1Y = 70;
-            int indexlabel2Y = indexlabel1Y+50;
+            int indexlabel2Y = indexlabel1Y + 50;
             int indextextBoxX = 170;
 
             int labelTitleX = posicionX;
@@ -188,7 +192,7 @@ namespace MasterRTU
             int label2PosX = posicionX;
             int label2PosY = posicionY + indexlabel2Y;
             int textBoxPosX = posicionX + indextextBoxX;
-            int textBoxPosY = posicionY + indexlabel2Y-2;
+            int textBoxPosY = posicionY + indexlabel2Y - 2;
 
 
             Label labelRegisterWriteTitle = new Label();
@@ -201,7 +205,7 @@ namespace MasterRTU
             for (int i = 0; i < slaveIds.Count; i++)
             {
                 Label labelSlave = new Label();
-                labelSlave.Text = "Slave " + slaveIds[i]+":";
+                labelSlave.Text = "Slave " + slaveIds[i] + ":";
                 labelSlave.Font = new Font(labelSlave.Font.FontFamily, 18, labelSlave.Font.Style);
                 labelSlave.AutoSize = true;
                 labelSlave.Location = new System.Drawing.Point(label1PosX, label1PosY);
@@ -223,7 +227,7 @@ namespace MasterRTU
                     textBox.Location = new System.Drawing.Point(textBoxPosX, textBoxPosY);
                     textBox.Font = new Font(textBox.Font.FontFamily, 12, textBox.Font.Style);
                     // Agregar los componentes al formulario
-                    
+
                     this.Controls.Add(labelGramos);
                     this.Controls.Add(textBox);
                 }
@@ -239,7 +243,7 @@ namespace MasterRTU
                     // Puedes agregar un manejo de excepciones más específico si lo deseas
                 }
 
-                
+
 
                 // Incrementar las posiciones para el siguiente conjunto de componentes
                 label1PosY += 100;
@@ -258,9 +262,8 @@ namespace MasterRTU
             btnRecognize.Name = "btnRecognize";
             btnRecognize.Font = new Font(btnRecognize.Font.FontFamily, 18, btnRecognize.Font.Style);
             btnRecognize.AutoSize = true;
-            btnRecognize.Location = new System.Drawing.Point(label1PosX+120, label1PosY);
+            btnRecognize.Location = new System.Drawing.Point(label1PosX + 120, label1PosY);
             this.Controls.Add(btnRecognize);
-
         }
 
         private void txtPort_TextChanged(object sender, EventArgs e)
