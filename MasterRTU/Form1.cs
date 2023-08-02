@@ -152,12 +152,12 @@ namespace MasterRTU
                             tCoil1_1.Text = coilsAlert[0].ToString();
                             tCoil1_2.Text = coilsAlert[1].ToString();
                             tCoil1_3.Text = coilsAlert[2].ToString();
-                            //string textBoxName = "txtGrm" + slaveId;
-                            //TextBox textBox = Controls.Find(textBoxName, true).FirstOrDefault() as TextBox;
-                            //if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
-                            //{
+                            string textBoxName = "txtGrm" + slaveId;
+                            TextBox textBox = Controls.Find(textBoxName, true).FirstOrDefault() as TextBox;
+                            if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
+                            {
                             //    ModClient.WriteSingleRegister(0, int.Parse(textBox.Text));
-                            //}
+                            }
                             slaveObject.FailCount = 0;
                         }
                         catch
