@@ -72,17 +72,28 @@ namespace MasterRTU
                     slaveIds.Clear();
                     for (byte slaveId = 1; slaveId <= 15; slaveId++) // Itera sobre todos los posibles IDs de esclavos (1-255)
                     {
-                        try
+                        int retryCount = 5;
+                        bool connected = false;
+                        for (int retry = 0; retry < retryCount; retry++)
                         {
-                            ModClient.UnitIdentifier = slaveId;
-                            int[] response = ModClient.ReadHoldingRegisters(0, 1);
-                            // Si no se produce una excepción, significa que el esclavo con el ID actual está conectado
-                            slaveIds.Add(slaveId);
+                            try
+                            {
+                                ModClient.UnitIdentifier = slaveId;
+                                int[] response = ModClient.ReadHoldingRegisters(0, 1);
+                                // Si no se produce una excepción, significa que el esclavo con el ID actual está conectado
+                                connected = true;
+                                break; // Sale del bucle de intentos si la conexión fue exitosa
+                            }
+                            catch (Exception)
+                            {
+                                // Si se produce una excepción, el esclavo con el ID actual no está conectado
+                                // Puedes agregar un manejo de excepciones más específico si lo deseas
+                            }
                         }
-                        catch (Exception)
+
+                        if (connected)
                         {
-                            // Si se produce una excepción, el esclavo con el ID actual no está conectado
-                            // Puedes agregar un manejo de excepciones más específico si lo deseas
+                            slaveIds.Add(slaveId);
                         }
                     }
                     Console.WriteLine("Cantidad de slaves conectados: " + slaveIds.Count);
