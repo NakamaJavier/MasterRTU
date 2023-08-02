@@ -56,7 +56,8 @@ namespace MasterRTU
                 timerPoll.Start();
                 lblStatus.Text = "Connected";
                 btnConnect.Text = "Disconect";
-                if (File.Exists(SlaveIdsFileName))
+                //if (File.Exists(SlaveIdsFileName))
+                if(false)
                 {
                     // Cargar los valores de slaveIds desde el archivo
                     Console.WriteLine("Se cargaron los slaveIds desde un archivo");
