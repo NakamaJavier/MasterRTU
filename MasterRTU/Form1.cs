@@ -262,6 +262,11 @@ namespace MasterRTU
             this.Controls.Add(btnRecognize);
 
         }
+
+        private void txtPort_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

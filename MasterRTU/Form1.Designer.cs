@@ -70,6 +70,7 @@
             this.txtPort.Size = new System.Drawing.Size(100, 20);
             this.txtPort.TabIndex = 3;
             this.txtPort.Text = "COM2";
+            this.txtPort.TextChanged += new System.EventHandler(this.txtPort_TextChanged);
             // 
             // txtBaud
             // 
