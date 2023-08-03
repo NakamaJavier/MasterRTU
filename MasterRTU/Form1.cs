@@ -156,7 +156,7 @@ namespace MasterRTU
                             TextBox textBox = Controls.Find(textBoxName, true).FirstOrDefault() as TextBox;
                             if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
                             {
-                            //    ModClient.WriteSingleRegister(0, int.Parse(textBox.Text));
+                                ModClient.WriteSingleRegister(0, int.Parse(textBox.Text));
                             }
                             slaveObject.FailCount = 0;
                         }
