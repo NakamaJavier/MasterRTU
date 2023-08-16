@@ -36,7 +36,7 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.Slave1 = new System.Windows.Forms.Label();
+            this.lbl_slave1 = new System.Windows.Forms.Label();
             this.tCoil1_1 = new System.Windows.Forms.Label();
             this.lblCoil1_1 = new System.Windows.Forms.Label();
             this.lblCoil1_2 = new System.Windows.Forms.Label();
@@ -49,9 +49,9 @@
             this.tCoil2_2 = new System.Windows.Forms.Label();
             this.lblCoil2_1 = new System.Windows.Forms.Label();
             this.tCoil2_1 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lbl_slave2 = new System.Windows.Forms.Label();
             this.timerPoll = new System.Windows.Forms.Timer(this.components);
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbl_lecturaCoil = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -118,15 +118,15 @@
             this.lblStatus.TabIndex = 7;
             this.lblStatus.Text = "Not Connected";
             // 
-            // Slave1
+            // lbl_slave1
             // 
-            this.Slave1.AutoSize = true;
-            this.Slave1.Location = new System.Drawing.Point(34, 214);
-            this.Slave1.Name = "Slave1";
-            this.Slave1.Size = new System.Drawing.Size(46, 13);
-            this.Slave1.TabIndex = 0;
-            this.Slave1.Text = "Slave 1:";
-            this.Slave1.Click += new System.EventHandler(this.label4_Click);
+            this.lbl_slave1.AutoSize = true;
+            this.lbl_slave1.Location = new System.Drawing.Point(34, 214);
+            this.lbl_slave1.Name = "lbl_slave1";
+            this.lbl_slave1.Size = new System.Drawing.Size(46, 13);
+            this.lbl_slave1.TabIndex = 0;
+            this.lbl_slave1.Text = "Slave 1:";
+            this.lbl_slave1.Click += new System.EventHandler(this.label4_Click);
             // 
             // tCoil1_1
             // 
@@ -243,44 +243,44 @@
             this.tCoil2_1.TabIndex = 15;
             this.tCoil2_1.Text = "0";
             // 
-            // label12
+            // lbl_slave2
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(171, 214);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(46, 13);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Slave 1:";
+            this.lbl_slave2.AutoSize = true;
+            this.lbl_slave2.Location = new System.Drawing.Point(171, 214);
+            this.lbl_slave2.Name = "lbl_slave2";
+            this.lbl_slave2.Size = new System.Drawing.Size(46, 13);
+            this.lbl_slave2.TabIndex = 14;
+            this.lbl_slave2.Text = "Slave 2:";
             // 
             // timerPoll
             // 
             this.timerPoll.Interval = 1000;
             this.timerPoll.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label4
+            // lbl_lecturaCoil
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(30, 156);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(272, 39);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "Lectura de Coils:";
-            this.label4.Click += new System.EventHandler(this.label4_Click_1);
+            this.lbl_lecturaCoil.AutoSize = true;
+            this.lbl_lecturaCoil.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_lecturaCoil.Location = new System.Drawing.Point(30, 156);
+            this.lbl_lecturaCoil.Name = "lbl_lecturaCoil";
+            this.lbl_lecturaCoil.Size = new System.Drawing.Size(272, 39);
+            this.lbl_lecturaCoil.TabIndex = 21;
+            this.lbl_lecturaCoil.Text = "Lectura de Coils:";
+            this.lbl_lecturaCoil.Click += new System.EventHandler(this.label4_Click_1);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 450);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lbl_lecturaCoil);
             this.Controls.Add(this.lblCoil2_3);
             this.Controls.Add(this.tCoil2_3);
             this.Controls.Add(this.lblCoil2_2);
             this.Controls.Add(this.tCoil2_2);
             this.Controls.Add(this.lblCoil2_1);
             this.Controls.Add(this.tCoil2_1);
-            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lbl_slave2);
             this.Controls.Add(this.lblCoil1_3);
             this.Controls.Add(this.tCoil1_3);
             this.Controls.Add(this.lblCoil1_2);
@@ -293,7 +293,7 @@
             this.Controls.Add(this.txtBaud);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPort);
-            this.Controls.Add(this.Slave1);
+            this.Controls.Add(this.lbl_slave1);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Modbus RTU Master";
@@ -311,7 +311,7 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Label Slave1;
+        private System.Windows.Forms.Label lbl_slave1;
         private System.Windows.Forms.Label tCoil1_1;
         private System.Windows.Forms.Label lblCoil1_1;
         private System.Windows.Forms.Label lblCoil1_2;
@@ -324,9 +324,9 @@
         private System.Windows.Forms.Label tCoil2_2;
         private System.Windows.Forms.Label lblCoil2_1;
         private System.Windows.Forms.Label tCoil2_1;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lbl_slave2;
         private System.Windows.Forms.Timer timerPoll;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbl_lecturaCoil;
     }
 }
 

@@ -37,72 +37,81 @@ namespace MasterRTU
         {
             // ...
         }
+        //Funcion de cuando se toca el boton de Connect:
 
+        //Configura el Modbus segun los datos que se le indican (baud y PORT)
+        //Ademas reconoce los slaves conectados si es la primera vez que se levanta el programa y guarda
+        //esa informacion en un txt para evitar hacer un reconocimiento nuevo (lleva mucho tiempo)
         private void btnConnect_Click(object sender, EventArgs e)
         {
+            //si la comunicacion esta apagada: se conecta la comunicacion y se setean los valores visibles
             if (btnConnect.Text == "Connect")
             {
-                // Accede al objeto SerialPort subyacente
-                serialPort.PortName = (txtPort.Text);
+
 
                 // Configurar los parámetros del puerto serie
+                serialPort.PortName = (txtPort.Text);
                 serialPort.BaudRate = int.Parse(txtBaud.Text);
                 serialPort.DataBits = 8;
                 serialPort.Parity = Parity.None;
                 serialPort.StopBits = StopBits.One;
 
+                //Inicializa la comunicacion ModBus
                 ModClient.SerialPort = serialPort.PortName;
                 ModClient.Connect();
                 timerPoll.Start();
                 lblStatus.Text = "Connected";
                 btnConnect.Text = "Disconect";
-                //if (File.Exists(SlaveIdsFileName))
-                if(false)
+                // Cargar los valores de slaveIds desde el archivo SlaveIdsFileName 
+                if (File.Exists(SlaveIdsFileName))
                 {
-                    // Cargar los valores de slaveIds desde el archivo
                     Console.WriteLine("Se cargaron los slaveIds desde un archivo");
                     string[] lines = File.ReadAllLines(SlaveIdsFileName);
                     slaveIds = lines.Select(int.Parse).ToList();
                     CreateWriteRegistersComponents(353, 20, slaveIds);
-
                 }
+                // Si no existe el archivo SlaveIdsFileName, pasa a identificar cada slave conectado
                 else
                 {
-                    ModClient.ConnectionTimeout = 250;
-                    slaveIds.Clear();
-                    for (byte slaveId = 1; slaveId <= 15; slaveId++) // Itera sobre todos los posibles IDs de esclavos (1-255)
+                    ModClient.ConnectionTimeout = 250; //pongo un tiempo de timeout mas corto para identificar mas rapido
+                    slaveIds.Clear(); //limpia la lista de slaves
+
+                    // A continuacion envio un mismo mensaje a diferentes slaves id (cambiar los parametros del for para saber cual es el slaveid maximo a iterar)
+                    for (byte slaveId = 1; slaveId <= 5; slaveId++) 
                     {
                         int retryCount = 2;
                         bool connected = false;
-                        for (int retry = 0; retry < retryCount; retry++)
+                        for (int retry = 0; retry < retryCount; retry++)//reintenta conectarse retryCount veces a cada slaveId
                         {
-                            try
+                            try //se usa try porque si se produce un timeout el programa se cuelga porque tira una excepcion, de esta manera se evita eso y el codigo sigue
                             {
                                 ModClient.UnitIdentifier = slaveId;
-                                bool[] response = ModClient.ReadCoils(0, 1);
+                                bool[] response = ModClient.ReadCoilsRTS(0, 1,serialPort); //se usa un read coil (function 01) para ver si el slave responde, si no responde el codigo continua al catch
                                 // Si no se produce una excepción, significa que el esclavo con el ID actual está conectado
                                 connected = true;
                                 break; // Sale del bucle de intentos si la conexión fue exitosa
                             }
                             catch (Exception)
                             {
+                                connected = false;
                                 // Si se produce una excepción, el esclavo con el ID actual no está conectado
                                 // Puedes agregar un manejo de excepciones más específico si lo deseas
                             }
                         }
-
+                        //si el slave responde correctamente
                         if (connected)
                         {
-                            slaveIds.Add(slaveId);
+                            slaveIds.Add(slaveId); //se agrega el slaveID a la lista
                         }
                     }
                     Console.WriteLine("Cantidad de slaves conectados: " + slaveIds.Count);
-                    CreateWriteRegistersComponents(353, 20, slaveIds);
-                    ModClient.ConnectionTimeout = 1000;
-                    File.WriteAllLines(SlaveIdsFileName, slaveIds.Select(id => id.ToString()));
+                    CreateWriteRegistersComponents(353, 20, slaveIds); //funcion que crea los componentes visibles de cada slave segun la lista de slaveids (los dos primeros parametros son las posiciones absolutas en el ejex y ejey donde comienza a plotear los componentes)
+                    ModClient.ConnectionTimeout = 1000;//vuelvo a un timeout de 1 segundo para la comunicacion Modbus
+                    File.WriteAllLines(SlaveIdsFileName, slaveIds.Select(id => id.ToString())); //escribe la lista en el archivo SlaveIdsFileName
                     Console.WriteLine("Se creo un archivo de SlavesIds");
                 }
             }
+            //si la comunicacion esta conectada: se desconecta la comunicacion y se setea valores visibles
             else
             {
                 ModClient.Disconnect();
@@ -123,15 +132,17 @@ namespace MasterRTU
             // ...
         }
 
+        //funcion que se repite cada x cantidad de tiempo (seteado en 1 segundo)
         private void timer1_Tick(object sender, EventArgs e)
         {
 
             if (ModClient.Connected == true)
             {
-                serialPort.RtsEnable = true;
-                Thread.Sleep(50);
+                //repite el siguiente codigo para cada valor de slaveId almacenado en la lista slaveIds
                 foreach (byte slaveId in slaveIds)
                 {
+                    //crea una lista que contenga objetos que poseen como atributos el slaveId y la cantidad de fallas consecutivas al intentar acceder a ese slaveId
+                    // maximo de 6 reintentos consecutivos, de llegar a 6 deja de intentar conectarse a ese slaveId, hasta que no se le indique lo contrario
                     SlaveObject slaveObject = slaveList.FirstOrDefault(slave => slave.SlaveId == slaveId);
                     if (slaveObject == null)
                     {
@@ -141,9 +152,12 @@ namespace MasterRTU
                     if (slaveObject.FailCount < 6)
                     {
                         try
-                        {
-                            ModClient.UnitIdentifier = slaveId;
-                            bool[] vals = ModClient.ReadCoils(0, 3);
+                        {   
+                            //logica de la comunicacion iterativa a los diferentes slaveIds:
+                            ModClient.UnitIdentifier = slaveId; //identidica el slave al cual se comunicara
+                            bool[] vals = ModClient.ReadCoilsRTS(0, 3, serialPort);//lee 3 bobinas, a partir de la posicion 0. Dentro utiliza el RTS (ctrl+click en el metodo para ir a su deficion, por si se quiere cambiar el tiempo para el RTS)
+                            
+                            //lo siguiente transforma los true y false, en 1 o 0
                             int[] coilsAlert = new int[vals.Length];
                             for (int i = 0; i < vals.Length; i++)
                             {
@@ -152,23 +166,22 @@ namespace MasterRTU
                             tCoil1_1.Text = coilsAlert[0].ToString();
                             tCoil1_2.Text = coilsAlert[1].ToString();
                             tCoil1_3.Text = coilsAlert[2].ToString();
-                            string textBoxName = "txtGrm" + slaveId;
-                            TextBox textBox = Controls.Find(textBoxName, true).FirstOrDefault() as TextBox;
-                            if (textBox != null && !string.IsNullOrEmpty(textBox.Text))
+                            string textBoxName = "txtGrm" + slaveId;//textBoxName contendra el identificador del componente donde uno escribe el dato para escribir un registro
+                            TextBox textBox = Controls.Find(textBoxName, true).FirstOrDefault() as TextBox; //busca el componente con el nombre de textBoxName
+                            if (textBox != null && !string.IsNullOrEmpty(textBox.Text)) //si el componente existe
                             {
-                                ModClient.WriteSingleRegister(0, int.Parse(textBox.Text));
+                                int[] registerValuesArray = new int[] { int.Parse(textBox.Text) };//convierto el valor ingresado en el componente que es un input para el usuario, en un array de enteros por eso parseo a int ya que lo que se coloca en el input se hace como string
+                                ModClient.WriteMultipleRegistersRTS(0, registerValuesArray,serialPort); //escribe multiples registros del slave con id slaveId, configurado para que sea solo 1 registro
                             }
-                            slaveObject.FailCount = 0;
+                            slaveObject.FailCount = 0;//reinicia la cantidad de fallos para este slaveid
                         }
                         catch
                         {
                             Console.WriteLine("No se encontro el Slave:" + slaveId + " \n Error: " + slaveObject.FailCount);
-                            slaveObject.FailCount++;
+                            slaveObject.FailCount++;//si no responde el slaveid se aumenta en 1 la cantidad de fallas reiterativas de este slaveId
                         }
                     }
                 }
-                Thread.Sleep(50);
-                serialPort.RtsEnable = false;
             }
         }
 
